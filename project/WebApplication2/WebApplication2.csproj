@@ -261,7 +261,7 @@
       <DependentUpon>Handler1.ashx</DependentUpon>
     </Compile>
     <Compile Include="Helpers\PagingHelper.cs" />
-    <Compile Include="Helpers\ReceiptNumberHelper.cs" />
+    <Compile Include="Helpers\ReceiptDetailHelper.cs" />
     <Compile Include="ReceiptList.aspx.cs">
       <DependentUpon>ReceiptList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

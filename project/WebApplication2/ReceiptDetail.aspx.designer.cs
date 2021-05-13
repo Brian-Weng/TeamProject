@@ -11,7 +11,7 @@ namespace WebApplication2
 {
 
 
-    public partial class InvoiceDetail
+    public partial class ReceiptDetail
     {
 
         /// <summary>

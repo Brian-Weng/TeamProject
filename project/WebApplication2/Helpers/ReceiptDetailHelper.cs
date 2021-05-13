@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
+
 using WebApplication2.Managers;
 
 namespace WebApplication2.Helpers
 {
-    public class ReceiptNumberHelper
+    public class ReceiptDetailHelper
     {
         public static string checkReceiptNumber(string receiptNumber)
         {
@@ -35,5 +36,21 @@ namespace WebApplication2.Helpers
                 return label;
             }
         }
+
+        public static bool isUpdateMode()
+        {   
+            string qsID = HttpContext.Current.Request.QueryString["ID"];
+            if (string.IsNullOrEmpty(qsID))
+            {
+                return false;
+            }
+            if (Regex.IsMatch(qsID, @"^[A-Z]{2}[-]{1}[0-9]{8}$"))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
     }
 }

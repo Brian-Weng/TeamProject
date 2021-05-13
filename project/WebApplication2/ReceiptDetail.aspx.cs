@@ -11,20 +11,21 @@ using WebApplication2.Helpers;
 
 namespace WebApplication2
 {
-    public partial class InvoiceDetail : System.Web.UI.Page
+    public partial class ReceiptDetail : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
             { 
-                if(this.isUpdateMode())
+                if(ReceiptDetailHelper.isUpdateMode())
                 {
                     this.lbltitle.InnerText = "修改發票";
                     string qsid = Request.QueryString["ID"];
 
+                    this.LoadReceipt(qsid);
+
                     this.txtReceiptNumber.Enabled = false;
                     this.txtReceiptNumber.BackColor = System.Drawing.Color.LightGray;
-                    this.LoadReceipt(qsid);
                 }
                 else
                 {
@@ -42,7 +43,7 @@ namespace WebApplication2
         {
             string input = this.txtReceiptNumber.Text;
 
-            this.lbReceiptNumber.Text = ReceiptNumberHelper.checkReceiptNumber(input);
+            this.lbReceiptNumber.Text = ReceiptDetailHelper.checkReceiptNumber(input);
         }
         #endregion
 
@@ -58,7 +59,7 @@ namespace WebApplication2
             string dpdValue = this.dpdRE.SelectedValue.ToString();
             //判斷使用者輸入的值,有值且格式正確,才可以存入資料庫。
             //空值或格式不正確,中斷方法
-            if(this.isUpdateMode())
+            if(ReceiptDetailHelper.isUpdateMode())
             {
                 string qsID = Request.QueryString["ID"];
 
@@ -69,9 +70,9 @@ namespace WebApplication2
                 model = new ReceiptModel();
             }
 
-            if(this.isUpdateMode())
+            if(ReceiptDetailHelper.isUpdateMode())
             {   //編輯模式只檢查金額不可為空(因發票號碼鎖定,其他輸入控制項會帶入當前項目)
-                if(inputAmount == null)
+                if(string.IsNullOrEmpty(inputAmount))
                 {
                     this.lblMsg.Text = "請填入發票金額";
                     return;
@@ -84,7 +85,7 @@ namespace WebApplication2
                     this.lblMsg.Text = "請填入完整的發票資料";
                     return;
                 }
-                else if (ReceiptNumberHelper.checkReceiptNumber(inputRecNo) != string.Empty)
+                else if (ReceiptDetailHelper.checkReceiptNumber(inputRecNo) != string.Empty)
                 {
                     this.lblMsg.Text = "請填入正確的發票資料";
                     return;
@@ -100,32 +101,21 @@ namespace WebApplication2
             model.Revenue_Expense = (Revenue_Expense)Enum.Parse(typeof(Revenue_Expense), dpdValue);
 
             //寫入DB
-            if (this.isUpdateMode())
+            if (ReceiptDetailHelper.isUpdateMode())
             {
                 manager.UpdateReceipt(model);
                 this.lblMsg.Text = "發票更新成功";
             }
-            else
+            else if(!ReceiptDetailHelper.isUpdateMode())
             {
                 manager.CreateReceipt(model);
                 this.lblMsg.Text = "發票新增成功";
             }
-
-        }
-        
-        private bool isUpdateMode()
-        {   
-            string qsID = Request.QueryString["ID"];
-            if (string.IsNullOrEmpty(qsID))
+            else
             {
-                return false;
-            }
-            if (Regex.IsMatch(qsID, @"^[A-Z]{2}[-]{1}[0-9]{8}$"))
-            {
-                return true;
+                this.lblMsg.Text = "存檔失敗，請聯繫開發人員";
             }
 
-            return false;
         }
 
         private void LoadReceipt(string ReceiptNumber)
@@ -142,7 +132,7 @@ namespace WebApplication2
 
             this.dpdCompany.SelectedValue = model.Company.Trim();
             this.txtAmount.Text = model.Amount.ToString();
-
+            
             int R_E = (int)model.Revenue_Expense;
             this.dpdRE.SelectedValue = R_E.ToString();
         }

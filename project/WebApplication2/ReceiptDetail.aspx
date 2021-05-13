@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="ReceiptDetail.aspx.cs" Inherits="WebApplication2.InvoiceDetail" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="ReceiptDetail.aspx.cs" Inherits="WebApplication2.ReceiptDetail" %>
 
 
 

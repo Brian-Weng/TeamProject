@@ -24,9 +24,8 @@ namespace WebApplication2
             if (!IsPostBack)
             {
                 this.LoadRepeater();
+                this.RestoreParameters();
             }
-
-            
         }
 
         protected void repInvoice_ItemCommand(object source, RepeaterCommandEventArgs e)
@@ -71,7 +70,7 @@ namespace WebApplication2
 
         private string GetQueryString(int? pageIndex)
         {
-            string page = Request.QueryString["Page"];
+            //string page = Request.QueryString["Page"];
             string company = Request.QueryString["company"];
             string minPriceText = Request.QueryString["minPrice"];
             string maxPriceText = Request.QueryString["maxPrice"];
@@ -79,8 +78,8 @@ namespace WebApplication2
 
             List<string> conditions = new List<string>();
 
-            if (!string.IsNullOrEmpty(page))
-                conditions.Add("Page=" + page);
+            //if (!string.IsNullOrEmpty(page))
+            //    conditions.Add("Page=" + page);
 
             if (!string.IsNullOrEmpty(company))
                 conditions.Add("company=" + company);
@@ -93,6 +92,9 @@ namespace WebApplication2
 
             if (!string.IsNullOrEmpty(R_E))
                 conditions.Add("R_E=" + R_E);
+
+            if (pageIndex.HasValue)
+                conditions.Add("Page=" + pageIndex.Value);
 
             string retText =
                 (conditions.Count > 0)
