@@ -37,7 +37,6 @@ namespace WebApplication2
             if(cmdName == "DeleteItem")
             {
                 manager.DeleteReceipt(arg);
-
                 this.LoadRepeater();
             }
 
@@ -169,6 +168,8 @@ namespace WebApplication2
                     Title = $"前往第 {i} 頁"
                 });
             }
+            this.firstPage.HRef = $"ReceiptList.aspx{this.GetQueryString(1)}";
+            this.lastPage.HRef = $"ReceiptList.aspx{this.GetQueryString(pages)}";
 
             this.repPaging.DataSource = pagingList;
             this.repPaging.DataBind();

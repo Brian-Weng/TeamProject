@@ -14,8 +14,8 @@ namespace WebApplication2.Managers
             string connectionString = "Data Source=localhost\\SQLExpress;Initial Catalog=Financials; Integrated Security=true";
 
             string queryString =
-                $@" INSERT INTO Receipt ( ReceiptNumber, Date, Company, Amount, Revenue_Expense) 
-                    VALUES ( @ReceiptNumber, @Date, @Company, @Amount, @Revenue_Expense)";
+                $@" INSERT INTO Receipt ( ReceiptNumber, Date, Company, Amount, Revenue_Expense, CreateDate, Creator) 
+                    VALUES ( @ReceiptNumber, @Date, @Company, @Amount, @Revenue_Expense, @CreateDate, @Creator)";
 
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -27,7 +27,9 @@ namespace WebApplication2.Managers
                 command.Parameters.AddWithValue("@Amount", model.Amount);
                 //將Enum值轉成相對應的int
                 command.Parameters.AddWithValue("@Revenue_Expense", (int)model.Revenue_Expense);
-                
+                command.Parameters.AddWithValue("@CreateDate", DateTime.Now);
+                command.Parameters.AddWithValue("@Creator", "Brian");
+
                 try
                 {
                     connection.Open();
@@ -78,7 +80,30 @@ namespace WebApplication2.Managers
 
         public void DeleteReceipt(string ReceiptNumber)
         {
+            string connectionString = "Data Source=localhost\\SQLExpress;Initial Catalog=Financials; Integrated Security=true";
 
+            string queryString =
+                $@" UPDATE Receipt
+                        SET Deleter = @Deleter
+                    WHERE ReceiptNumber = @ReceiptNumber;
+                ";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.AddWithValue("@ReceiptNumber", ReceiptNumber);
+                command.Parameters.AddWithValue("@Deleter", "Brian");
+
+                try
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+            }
         }
 
         public List<ReceiptModel> GetReceipts(string company, decimal? minPrice, decimal? maxPrice, int? R_E , out int totalSize, int currentPage = 1, int pageSize = 10)
@@ -118,15 +143,20 @@ namespace WebApplication2.Managers
                 $@" 
                     SELECT TOP {10} * FROM
                     (
-                    SELECT
-                        ROW_NUMBER() OVER(ORDER BY Date DESC) AS RowNumber,
-                        ReceiptNumber,
-                        Date,
-                        Company,
-                        Amount,
-                        Revenue_Expense
-                    FROM Receipt
-                    {filterConditions}
+                        SELECT
+                            ROW_NUMBER() OVER(ORDER BY Date DESC) AS RowNumber,
+                            ReceiptNumber,
+                            Date,
+                            Company,
+                            Amount,
+                            Revenue_Expense
+                        FROM
+                            (
+							SELECT *
+							FROM Receipt
+							WHERE Deleter IS NULL
+						    ) AS TempD
+                        {filterConditions}
                     ) AS TempT
                     WHERE RowNumber > {pageSize * (currentPage - 1)}
                     ORDER BY TempT.Date DESC

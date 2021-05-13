@@ -78,7 +78,7 @@
                         <td><%# Eval("Amount") %></td>
                         <td><%# (Revenue_Expense)Eval("Revenue_Expense") %></td>
                         <td>
-                            <asp:Button ID="btnDelete" runat="server" Text="刪除" CommandName="DeleteItem" CommandArgument='<%# Eval("ReceiptNumber") %>'/>
+                            <asp:Button ID="btnDelete" runat="server" Text="刪除" CommandName="DeleteItem" CommandArgument='<%# Eval("ReceiptNumber") %>' OnClientClick='<%# Eval("ReceiptNumber", "return confirm(\"確定要刪除發票{0}?\");") %>'/>
                             <asp:Button ID="btnUpdate" runat="server" Text="修改" CommandName="UpdateItem" CommandArgument='<%# Eval("ReceiptNumber") %>'/>
                         </td>
                     </tr>
@@ -86,11 +86,13 @@
             </asp:Repeater>
         </table>
         <div>
+            <a runat="server" id="firstPage" href="#" title="前往第1頁">First</a>
             <asp:Repeater runat="server" ID="repPaging">
                 <ItemTemplate>
-                    <a href="<%# Eval("Link") %>" title="<%# Eval("Title") %>">Page-<%# Eval("Name") %></a>
+                    <a href="<%# Eval("Link") %>" title="<%# Eval("Title") %>"><%# Eval("Name") %></a>
                 </ItemTemplate>
             </asp:Repeater>
+            <a runat="server" id="lastPage" href="#" title="前往第1頁">Last</a>
         </div>
     </div>
 </asp:Content>
