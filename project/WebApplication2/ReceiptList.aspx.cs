@@ -78,7 +78,7 @@ namespace WebApplication2
             List<string> conditions = new List<string>();
 
             //if (!string.IsNullOrEmpty(page))
-            //    conditions.Add("Page=" + page);
+            //conditions.Add("Page=" + page);
 
             if (!string.IsNullOrEmpty(company))
                 conditions.Add("company=" + company);
