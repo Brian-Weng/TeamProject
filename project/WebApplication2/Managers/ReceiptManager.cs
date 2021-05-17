@@ -84,7 +84,8 @@ namespace WebApplication2.Managers
 
             string queryString =
                 $@" UPDATE Receipt
-                        SET Deleter = @Deleter
+                        SET  DeleteDate = @DeleteDate,
+                             Deleter = @Deleter
                     WHERE ReceiptNumber = @ReceiptNumber;
                 ";
 
@@ -92,6 +93,7 @@ namespace WebApplication2.Managers
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
                 command.Parameters.AddWithValue("@ReceiptNumber", ReceiptNumber);
+                command.Parameters.AddWithValue("@DeleteDate", DateTime.Now);
                 command.Parameters.AddWithValue("@Deleter", "Brian");
 
                 try

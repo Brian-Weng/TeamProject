@@ -33,11 +33,38 @@ namespace WebApplication2
                 }
             }
         }
+
+        #region LoadReceiptTable
+        private void LoadReceipt(string ReceiptNumber)
+        {
+            var manager = new ReceiptManager();
+            var model = manager.GetReceipt(ReceiptNumber);//out Guid temp
+
+            if (model == null)
+                Response.Redirect("~/ReceiptList.aspx");
+
+            this.txtReceiptNumber.Text = model.ReceiptNumber;
+            //將日期轉成yyyy-MM-dd格式
+            this.lbDate.Text = string.Format("{0:yyyy-MM-dd}", model.Date);
+
+            this.dpdCompany.SelectedValue = model.Company.Trim();
+            this.txtAmount.Text = model.Amount.ToString();
+
+            int R_E = (int)model.Revenue_Expense;
+            this.dpdRE.SelectedValue = R_E.ToString();
+        }
+
+        #endregion
+
+        #region SetInputDate
         protected void cldrDate_SelectionChanged(object sender, EventArgs e)
         {
             //將使用者點選的日期存入日期標籤
             lbDate.Text = string.Format("{0:yyyy-MM-dd}", cldrDate.SelectedDate);
         }
+
+        #endregion
+
         #region checkReceiptNumber
         protected void txtReceiptNumber_TextChanged(object sender, EventArgs e)
         {
@@ -118,23 +145,5 @@ namespace WebApplication2
 
         }
 
-        private void LoadReceipt(string ReceiptNumber)
-        {
-            var manager = new ReceiptManager();
-            var model = manager.GetReceipt(ReceiptNumber);//out Guid temp
-
-            if (model == null)
-                Response.Redirect("~/ReceiptList.aspx");
-            
-            this.txtReceiptNumber.Text = model.ReceiptNumber;
-            //將日期轉成yyyy-MM-dd格式
-            this.lbDate.Text = string.Format("{0:yyyy-MM-dd}", model.Date);
-
-            this.dpdCompany.SelectedValue = model.Company.Trim();
-            this.txtAmount.Text = model.Amount.ToString();
-            
-            int R_E = (int)model.Revenue_Expense;
-            this.dpdRE.SelectedValue = R_E.ToString();
-        }
     }
 }

@@ -13,12 +13,12 @@ namespace WebApplication2
     public partial class Invoice : System.Web.UI.Page
     {
         const int _pageSize = 10;
-        internal class PagingLink
-        {
-            public string Name { get; set; }
-            public string Link { get; set; }
-            public string Title { get; set; }
-        }
+        //internal class PagingLink
+        //{
+        //    public string Name { get; set; }
+        //    public string Link { get; set; }
+        //    public string Title { get; set; }
+        //}
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -67,42 +67,38 @@ namespace WebApplication2
                 this.ddlR_E.SelectedValue = R_E;
         }
 
-        private string GetQueryString(int? pageIndex)
-        {
-            //string page = Request.QueryString["Page"];
-            string company = Request.QueryString["company"];
-            string minPriceText = Request.QueryString["minPrice"];
-            string maxPriceText = Request.QueryString["maxPrice"];
-            string R_E = Request.QueryString["R_E"];
+        //private string GetQueryString(int? pageIndex)
+        //{
+        //    string company = Request.QueryString["company"];
+        //    string minPriceText = Request.QueryString["minPrice"];
+        //    string maxPriceText = Request.QueryString["maxPrice"];
+        //    string R_E = Request.QueryString["R_E"];
 
-            List<string> conditions = new List<string>();
+        //    List<string> conditions = new List<string>();
 
-            //if (!string.IsNullOrEmpty(page))
-            //conditions.Add("Page=" + page);
+        //    if (!string.IsNullOrEmpty(company))
+        //        conditions.Add("company=" + company);
 
-            if (!string.IsNullOrEmpty(company))
-                conditions.Add("company=" + company);
+        //    if(!string.IsNullOrEmpty(minPriceText))
+        //        conditions.Add("minPrice=" + minPriceText);
 
-            if(!string.IsNullOrEmpty(minPriceText))
-                conditions.Add("minPrice=" + minPriceText);
+        //    if(!string.IsNullOrEmpty(maxPriceText))
+        //        conditions.Add("maxPrice=" + maxPriceText);
 
-            if(!string.IsNullOrEmpty(maxPriceText))
-                conditions.Add("maxPrice=" + maxPriceText);
+        //    if (!string.IsNullOrEmpty(R_E))
+        //        conditions.Add("R_E=" + R_E);
 
-            if (!string.IsNullOrEmpty(R_E))
-                conditions.Add("R_E=" + R_E);
+        //    if (pageIndex.HasValue)
+        //        conditions.Add("Page=" + pageIndex.Value);
 
-            if (pageIndex.HasValue)
-                conditions.Add("Page=" + pageIndex.Value);
+        //    string retText =
+        //        (conditions.Count > 0)
+        //            ? "?" + string.Join("&", conditions)
+        //            : string.Empty;
 
-            string retText =
-                (conditions.Count > 0)
-                    ? "?" + string.Join("&", conditions)
-                    : string.Empty;
+        //    return retText;
 
-            return retText;
-
-        }
+        //}
 
         private void LoadRepeater()
         {
@@ -149,33 +145,21 @@ namespace WebApplication2
                     R_E = temp;
             }
 
-
             int totalSize = 0;
 
             var manager = new ReceiptManager();
             var list = manager.GetReceipts(company, minPrice, maxPrice, R_E, out totalSize, pIndex, _pageSize);
-
-
-            int pages = PagingHelper.CalculatePages(totalSize, _pageSize);
-
-            List<PagingLink> pagingList = new List<PagingLink>();
-            for (var i = 1; i <= pages; i++)
-            {
-                pagingList.Add(new PagingLink()
-                {
-                    Link = $"ReceiptList.aspx{this.GetQueryString(i)}",
-                    Name = $"{i}",
-                    Title = $"前往第 {i} 頁"
-                });
-            }
-            this.firstPage.HRef = $"ReceiptList.aspx{this.GetQueryString(1)}";
-            this.lastPage.HRef = $"ReceiptList.aspx{this.GetQueryString(pages)}";
-
-            this.repPaging.DataSource = pagingList;
-            this.repPaging.DataBind();
-
             this.repInvoice.DataSource = list;
             this.repInvoice.DataBind();
+
+            var pagination = new PagingHelper();
+            int pages = pagination.CalculatePages(totalSize, _pageSize);
+            this.firstPage.HRef = pagination.GetPageUrl(1);
+            this.lastPage.HRef = pagination.GetPageUrl(pages);
+            var pagingList = pagination.RepPagingList(pages);
+            this.repPaging.DataSource = pagingList;
+            this.repPaging.DataBind();
+            
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)

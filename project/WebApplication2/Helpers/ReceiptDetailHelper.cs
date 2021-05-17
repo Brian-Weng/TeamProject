@@ -44,12 +44,15 @@ namespace WebApplication2.Helpers
             {
                 return false;
             }
-            if (Regex.IsMatch(qsID, @"^[A-Z]{2}[-]{1}[0-9]{8}$"))
+            else if (Regex.IsMatch(qsID, @"^[A-Z]{2}[-]{1}[0-9]{8}$"))
             {
                 return true;
             }
-
-            return false;
+            else
+            {
+                return false;
+            }
+                
         }
 
     }
