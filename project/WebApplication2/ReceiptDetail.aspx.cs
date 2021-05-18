@@ -60,6 +60,7 @@ namespace WebApplication2
         protected void cldrDate_SelectionChanged(object sender, EventArgs e)
         {
             //將使用者點選的日期存入日期標籤
+            lbDate.ForeColor = System.Drawing.Color.Black;
             lbDate.Text = string.Format("{0:yyyy-MM-dd}", cldrDate.SelectedDate);
         }
 
@@ -68,9 +69,18 @@ namespace WebApplication2
         #region checkReceiptNumber
         protected void txtReceiptNumber_TextChanged(object sender, EventArgs e)
         {
-            string input = this.txtReceiptNumber.Text;
+            string inputRepNumber = this.txtReceiptNumber.Text;
 
-            this.lbReceiptNumber.Text = ReceiptDetailHelper.checkReceiptNumber(input);
+            this.lbReceiptNumber.Text = ReceiptDetailHelper.checkReceiptNumber(inputRepNumber);
+        }
+        #endregion
+
+        #region checkAmount
+        protected void txtAmount_TextChanged(object sender, EventArgs e)
+        {
+            string inputAmount = this.txtAmount.Text;
+
+            this.lbAmount.Text = ReceiptDetailHelper.checkAmount(inputAmount);
         }
         #endregion
 
@@ -109,6 +119,7 @@ namespace WebApplication2
             {   //新增模式驗證發票號碼,日期輸入及金額輸入不可為空值
                 if (inputRecNo == null || string.Equals(inputDate, "請選擇日期") || inputAmount == null)
                 {
+                    this.lbDate.ForeColor = System.Drawing.Color.Red;
                     this.lblMsg.Text = "請填入完整的發票資料";
                     return;
                 }
@@ -120,10 +131,17 @@ namespace WebApplication2
             }
 
 
-            model.ReceiptNumber = this.txtReceiptNumber.Text.Trim();
-            model.Date = DateTime.Parse(this.lbDate.Text);
-            model.Company = this.dpdCompany.SelectedItem.Text;
-            model.Amount = decimal.Parse(this.txtAmount.Text.Trim());
+
+
+
+
+
+
+
+            model.ReceiptNumber = inputRecNo;
+            model.Date = DateTime.Parse(inputDate);
+            model.Company = dpdCompany;
+            model.Amount = decimal.Parse(inputAmount);
             //將下拉選單的字串值,轉型成Enum
             model.Revenue_Expense = (Revenue_Expense)Enum.Parse(typeof(Revenue_Expense), dpdValue);
 
@@ -145,5 +163,6 @@ namespace WebApplication2
 
         }
 
+        
     }
 }

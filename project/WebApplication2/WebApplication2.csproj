@@ -138,7 +138,6 @@
     <Content Include="photo\歡迎BOSS.png" />
     <Content Include="photo\歡迎主管.png" />
     <Content Include="photo\歡迎員工.png" />
-    <Content Include="PreSalesTaxList.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -162,7 +161,6 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
-    <Content Include="TaxPayableList.aspx" />
     <Content Include="UCReceiptList.ascx" />
     <Content Include="UC新增日記帳.ascx" />
     <Content Include="修改項目.aspx" />
@@ -316,26 +314,12 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
-    <Compile Include="PreSalesTaxList.aspx.cs">
-      <DependentUpon>PreSalesTaxList.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="PreSalesTaxList.aspx.designer.cs">
-      <DependentUpon>PreSalesTaxList.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Site1.Master.cs">
       <DependentUpon>Site1.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Site1.Master.designer.cs">
       <DependentUpon>Site1.Master</DependentUpon>
-    </Compile>
-    <Compile Include="TaxPayableList.aspx.cs">
-      <DependentUpon>TaxPayableList.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="TaxPayableList.aspx.designer.cs">
-      <DependentUpon>TaxPayableList.aspx</DependentUpon>
     </Compile>
     <Compile Include="ucNav.ascx.cs">
       <DependentUpon>ucNav.ascx</DependentUpon>

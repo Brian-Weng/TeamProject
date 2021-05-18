@@ -10,15 +10,10 @@ using WebApplication2.Models;
 
 namespace WebApplication2
 {
-    public partial class Invoice : System.Web.UI.Page
+    public partial class ReceiptList : System.Web.UI.Page
     {
         const int _pageSize = 10;
-        //internal class PagingLink
-        //{
-        //    public string Name { get; set; }
-        //    public string Link { get; set; }
-        //    public string Title { get; set; }
-        //}
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -66,40 +61,6 @@ namespace WebApplication2
             if (!string.IsNullOrEmpty(R_E))
                 this.ddlR_E.SelectedValue = R_E;
         }
-
-        //private string GetQueryString(int? pageIndex)
-        //{
-        //    string company = Request.QueryString["company"];
-        //    string minPriceText = Request.QueryString["minPrice"];
-        //    string maxPriceText = Request.QueryString["maxPrice"];
-        //    string R_E = Request.QueryString["R_E"];
-
-        //    List<string> conditions = new List<string>();
-
-        //    if (!string.IsNullOrEmpty(company))
-        //        conditions.Add("company=" + company);
-
-        //    if(!string.IsNullOrEmpty(minPriceText))
-        //        conditions.Add("minPrice=" + minPriceText);
-
-        //    if(!string.IsNullOrEmpty(maxPriceText))
-        //        conditions.Add("maxPrice=" + maxPriceText);
-
-        //    if (!string.IsNullOrEmpty(R_E))
-        //        conditions.Add("R_E=" + R_E);
-
-        //    if (pageIndex.HasValue)
-        //        conditions.Add("Page=" + pageIndex.Value);
-
-        //    string retText =
-        //        (conditions.Count > 0)
-        //            ? "?" + string.Join("&", conditions)
-        //            : string.Empty;
-
-        //    return retText;
-
-        //}
-
         private void LoadRepeater()
         {
             string page = Request.QueryString["Page"];

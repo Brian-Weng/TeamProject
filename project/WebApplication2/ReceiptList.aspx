@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="ReceiptList.aspx.cs" Inherits="WebApplication2.Invoice" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="ReceiptList.aspx.cs" Inherits="WebApplication2.ReceiptList" %>
 <%@ Import Namespace="WebApplication2.Models" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
         <style>
