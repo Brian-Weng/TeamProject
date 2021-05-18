@@ -129,6 +129,7 @@
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="CSS\CSS.css" />
+    <Content Include="ErrorPages\Oops.aspx" />
     <Content Include="Global.asax" />
     <Content Include="ReceiptList.aspx" />
     <Content Include="ReceiptDetail.aspx" />
@@ -259,6 +260,13 @@
   <ItemGroup>
     <Compile Include="API\Handler1.ashx.cs">
       <DependentUpon>Handler1.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorPages\Oops.aspx.cs">
+      <DependentUpon>Oops.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ErrorPages\Oops.aspx.designer.cs">
+      <DependentUpon>Oops.aspx</DependentUpon>
     </Compile>
     <Compile Include="Helpers\PagingHelper.cs" />
     <Compile Include="Helpers\ReceiptDetailHelper.cs" />

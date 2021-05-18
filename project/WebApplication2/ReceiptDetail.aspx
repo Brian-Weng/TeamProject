@@ -1,18 +1,27 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="ReceiptDetail.aspx.cs" Inherits="WebApplication2.ReceiptDetail" %>
 
 
-
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
+        #content{
+            margin-bottom:10px;
+            margin-left:300px;
+            width:1100px;
+        }
+        .jumbotron{
+          padding-top:10px;
+          padding-bottom:10px;
+          margin-bottom:5px;
+        }
         th{
             font-size:18px;
         }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-<asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
 <div class="jumbotron"><h1 id="lbltitle" runat="server" class="display-4" ></h1></div>
-<div class="jumbotron">
+<div id="content" class="jumbotron">
     <div class="container d-flex align-items-center justify-content-center">
     <table class="table" style="width:570px">
         <tr>
@@ -20,7 +29,7 @@
         </tr>
         <tr>
             <th>發票號碼：</th>
-            <td><asp:UpdatePanel ID="UpdatePanel2" runat="server">
+            <td><asp:UpdatePanel ID="UpdatePanel1" runat="server">
                     <ContentTemplate>
                         <asp:TextBox ID="txtReceiptNumber" runat="server" AutoPostBack="true" OnTextChanged="txtReceiptNumber_TextChanged"></asp:TextBox>
                         <asp:Label ID="lbReceiptNumber" runat="server" Text="" ForeColor="Red"></asp:Label>
@@ -31,7 +40,7 @@
         <tr>
             <th>日期：</th>
             <td>
-                <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                     <ContentTemplate>
                         <asp:Label ID="lbDate" runat="server" Text="請選擇日期" Font-Bold="True" Font-Size="Large"></asp:Label><br /><hr />
                         <asp:Calendar ID="cldrDate" runat="server" ShowGridLines="True" OnSelectionChanged="cldrDate_SelectionChanged" CellPadding="1" Width="400px" DayNameFormat="Shortest"></asp:Calendar>
@@ -43,17 +52,17 @@
             <th>開立公司：</th>
             <td>
                 <asp:DropDownList ID="dpdCompany" runat="server">
-                    <asp:ListItem Text="FamilyMart" Value="FamilyMart"></asp:ListItem>
-                    <asp:ListItem Text="7-Eleven" Value="7-Eleven"></asp:ListItem>
-                    <asp:ListItem Text="GlobalGas" Value="GlobalGas"></asp:ListItem>
-                    <asp:ListItem Text="UBay" Value="UBay"></asp:ListItem>
+                    <asp:ListItem Text="FamilyMart" Value="1"></asp:ListItem>
+                    <asp:ListItem Text="7-Eleven" Value="2"></asp:ListItem>
+                    <asp:ListItem Text="GlobalGas" Value="3"></asp:ListItem>
+                    <asp:ListItem Text="UBay" Value="4"></asp:ListItem>
                 </asp:DropDownList>
             </td>
         </tr>
         <tr>
             <th>金額：</th>
             <td>
-                <asp:TextBox ID="txtAmount" runat="server" MaxLength="10" TextMode="Number" min="1" max="9999999"></asp:TextBox>
+                <asp:TextBox ID="txtAmount" runat="server" MaxLength="8" TextMode="Number" min="1" max="99999999"></asp:TextBox>
             </td>
         </tr>
         <tr>

@@ -34,7 +34,7 @@ namespace WebApplication2
             }
         }
 
-        #region LoadReceiptTable
+        #region ShowReceiptTable
         private void LoadReceipt(string ReceiptNumber)
         {
             var manager = new ReceiptManager();
@@ -124,7 +124,7 @@ namespace WebApplication2
             model.Date = DateTime.Parse(this.lbDate.Text);
             model.Company = this.dpdCompany.SelectedItem.Text;
             model.Amount = decimal.Parse(this.txtAmount.Text.Trim());
-            //將下拉選單的值轉成字串,再轉成相對應的Enum值
+            //將下拉選單的字串值,轉型成Enum
             model.Revenue_Expense = (Revenue_Expense)Enum.Parse(typeof(Revenue_Expense), dpdValue);
 
             //寫入DB

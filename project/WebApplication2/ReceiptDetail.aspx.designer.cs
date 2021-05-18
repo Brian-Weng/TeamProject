@@ -42,13 +42,13 @@ namespace WebApplication2
         protected global::System.Web.UI.WebControls.Label lblMsg;
 
         /// <summary>
-        /// UpdatePanel2 控制項。
+        /// UpdatePanel1 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
         /// txtReceiptNumber 控制項。
@@ -69,13 +69,13 @@ namespace WebApplication2
         protected global::System.Web.UI.WebControls.Label lbReceiptNumber;
 
         /// <summary>
-        /// UpdatePanel1 控制項。
+        /// UpdatePanel2 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
 
         /// <summary>
         /// lbDate 控制項。

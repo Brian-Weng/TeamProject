@@ -2,34 +2,38 @@
 <%@ Import Namespace="WebApplication2.Models" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
         <style>
-        #content{
-            margin-bottom:10px;
-            margin-left:300px;
-            width:1100px;
-        }
-        #insert{
-            margin-bottom:20px;
-        }
-        #confirm{
-            margin-left:500px;
-        }
-        #deleteCheck{
-            margin:auto;
-        }
-       #plusSub{
-           margin-left:3px;
-       }
-       #addSub{
-           margin-left:550px;
-       }
-       #confirmSub{
-            margin-left:550px;
-       }
-      .jumbotron{
-          padding-top:10px;
-          padding-bottom:10px;
-          margin-bottom:5px;
-      }
+            #content{
+                margin-bottom:10px;
+                margin-left:300px;
+                width:1100px;
+            }
+            #insert{
+                margin-bottom:20px;
+            }
+            #confirm{
+                margin-left:500px;
+            }
+            #deleteCheck{
+                margin:auto;
+            }
+            #plusSub{
+                margin-left:3px;
+            }
+            #addSub{
+                margin-left:550px;
+            }
+            #confirmSub{
+                 margin-left:550px;
+            }
+            .jumbotron{
+                 padding-top:10px;
+                 padding-bottom:10px;
+                 margin-bottom:5px;
+            }
+            a{
+                font-size:20px;
+                padding:4px;
+            }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">

@@ -37,7 +37,7 @@ namespace WebApplication2.Managers
                 }
                 catch (Exception ex)
                 {
-                    throw;
+                    throw ex;
                 }
             }
         }
