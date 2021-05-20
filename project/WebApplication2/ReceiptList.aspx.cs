@@ -16,6 +16,7 @@ namespace WebApplication2
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //當頁面第一次載入的時候初始化頁面的預設設定
             if (!IsPostBack)
             {
                 this.LoadRepeater();
@@ -37,7 +38,7 @@ namespace WebApplication2
 
             if(cmdName == "UpdateItem")
             {
-                string targetUrl = "~/ReceiptDetail.aspx?ID=" + arg;
+                string targetUrl = "~/ReceiptDetail.aspx?RepNo=" + arg;
                 Response.Redirect(targetUrl);
             }
         }

@@ -20,7 +20,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-<div class="jumbotron"><h1 id="lbltitle" runat="server" class="display-4" ></h1></div>
+<div class="jumbotron"><h1 id="h1title" runat="server" class="display-4" ></h1></div>
 <div id="content" class="jumbotron">
     <div class="container d-flex align-items-center justify-content-center">
         <table class="table" style="width:570px">
@@ -52,11 +52,8 @@
             <tr>
                 <th>開立公司：</th>
                 <td>
-                    <asp:DropDownList ID="dpdCompany" runat="server">
-                        <asp:ListItem Text="UBay" Value="1"></asp:ListItem>
-                        <asp:ListItem Text="7-Eleven" Value="2"></asp:ListItem>
-                        <asp:ListItem Text="FamilyMart" Value="3"></asp:ListItem>
-                        <asp:ListItem Text="GlobalGas" Value="4"></asp:ListItem>
+                    <asp:DropDownList ID="dplCompany" runat="server">
+                        
                     </asp:DropDownList>
                 </td>
             </tr>
@@ -74,7 +71,7 @@
             <tr>
                 <th>進/銷項：</th>
                 <td>
-                    <asp:DropDownList ID="dpdRE" runat="server">
+                    <asp:DropDownList ID="dplRE" runat="server">
                         <asp:ListItem Text="銷項" Value="1"></asp:ListItem>
                         <asp:ListItem Text="進項" Value="2"></asp:ListItem>
                     </asp:DropDownList>

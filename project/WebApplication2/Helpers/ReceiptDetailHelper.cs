@@ -40,10 +40,10 @@ namespace WebApplication2.Helpers
 
         public static bool isUpdateMode()
         {   
-            string qsID = HttpContext.Current.Request.QueryString["ID"];
-            if (string.IsNullOrEmpty(qsID))
+            string RepNumber = HttpContext.Current.Request.QueryString["RepNo"];
+            if (string.IsNullOrEmpty(RepNumber))
                 return false;
-            else if (Regex.IsMatch(qsID, @"^[A-Z]{2}[-]{1}[0-9]{8}$"))
+            else if (Regex.IsMatch(RepNumber, @"^[A-Z]{2}[-]{1}[0-9]{8}$"))
                 return true;
             else
                 return false;

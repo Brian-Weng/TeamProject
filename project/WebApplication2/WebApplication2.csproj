@@ -266,8 +266,10 @@
     <Compile Include="ErrorPages\Oops.aspx.designer.cs">
       <DependentUpon>Oops.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\DBBase.cs" />
     <Compile Include="Helpers\PagingHelper.cs" />
     <Compile Include="Helpers\ReceiptDetailHelper.cs" />
+    <Compile Include="Managers\DDLManager.cs" />
     <Compile Include="ReceiptList.aspx.cs">
       <DependentUpon>ReceiptList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

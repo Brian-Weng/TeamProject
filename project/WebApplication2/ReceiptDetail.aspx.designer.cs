@@ -24,13 +24,13 @@ namespace WebApplication2
         protected global::System.Web.UI.ScriptManager ScriptManager1;
 
         /// <summary>
-        /// lbltitle 控制項。
+        /// h1title 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lbltitle;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl h1title;
 
         /// <summary>
         /// lblMsg 控制項。
@@ -96,13 +96,13 @@ namespace WebApplication2
         protected global::System.Web.UI.WebControls.Calendar cldrDate;
 
         /// <summary>
-        /// dpdCompany 控制項。
+        /// dplCompany 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dpdCompany;
+        protected global::System.Web.UI.WebControls.DropDownList dplCompany;
 
         /// <summary>
         /// UpdatePanel3 控制項。
@@ -132,13 +132,13 @@ namespace WebApplication2
         protected global::System.Web.UI.WebControls.Label lbAmount;
 
         /// <summary>
-        /// dpdRE 控制項。
+        /// dplRE 控制項。
         /// </summary>
         /// <remarks>
         /// 自動產生的欄位。
         /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList dpdRE;
+        protected global::System.Web.UI.WebControls.DropDownList dplRE;
 
         /// <summary>
         /// btnSave 控制項。

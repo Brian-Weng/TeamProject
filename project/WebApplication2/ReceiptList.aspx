@@ -47,10 +47,10 @@
                 開立公司:
                 <asp:DropDownList runat="server" ID="ddlCompany">
                     <asp:ListItem Text="全部" Value=""></asp:ListItem>
-                    <asp:ListItem Text="FamilyMart" Value="FamilyMart"></asp:ListItem>
-                    <asp:ListItem Text="7-Eleven" Value="7-Eleven"></asp:ListItem>
-                    <asp:ListItem Text="GlobalGas" Value="GlobalGas"></asp:ListItem>
-                    <asp:ListItem Text="UBay" Value="UBay"></asp:ListItem>
+                    <asp:ListItem Text="UBay" Value="1"></asp:ListItem>
+                    <asp:ListItem Text="7-Eleven" Value="2"></asp:ListItem>
+                    <asp:ListItem Text="FamilyMart" Value="3"></asp:ListItem>
+                    <asp:ListItem Text="GlobalGas" Value="4"></asp:ListItem>
                 </asp:DropDownList>
                 金額:
                 <asp:TextBox runat="server" ID="txtMinAmount" placeHolder="min" TextMode="Number" Width="120"></asp:TextBox>&nbsp~
@@ -65,7 +65,7 @@
             </div>
         </div>
         <table id="InvoiceTable"  class="table table-striped table-hover">
-                <tr>
+                <tr class="table-primary">
                     <th>發票號碼</th>
                     <th>日期</th>
                     <th>開立公司</th>
@@ -90,13 +90,17 @@
             </asp:Repeater>
         </table>
         <div>
-            <a runat="server" id="firstPage" href="#" title="前往第1頁">First</a>
-            <asp:Repeater runat="server" ID="repPaging">
-                <ItemTemplate>
-                    <a href="<%# Eval("Link") %>" title="<%# Eval("Title") %>"><%# Eval("Name") %></a>
-                </ItemTemplate>
-            </asp:Repeater>
-            <a runat="server" id="lastPage" href="#" title="前往第1頁">Last</a>
+            <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" runat="server" id="firstPage" href="#" title="前往第1頁">First</a></li>
+                <asp:Repeater runat="server" ID="repPaging">
+                    <ItemTemplate>
+                        <li class="page-item"><a class="page-link" href="<%# Eval("Link") %>" title="<%# Eval("Title") %>"><%# Eval("Name") %></a></li>
+                    </ItemTemplate>
+                </asp:Repeater>
+                <li class="page-item"><a class="page-link" runat="server" id="lastPage" href="#" title="前往第1頁">Last</a></li>
+            </ul>
+            </nav>
         </div>
     </div>
 </asp:Content>

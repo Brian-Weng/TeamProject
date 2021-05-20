@@ -8,6 +8,7 @@ using WebApplication2.Managers;
 using WebApplication2.Models;
 using System.Text.RegularExpressions;
 using WebApplication2.Helpers;
+using System.Data;
 
 namespace WebApplication2
 {
@@ -15,43 +16,54 @@ namespace WebApplication2
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
-            { 
-                if(ReceiptDetailHelper.isUpdateMode())
-                {
-                    this.lbltitle.InnerText = "修改發票";
-                    string qsid = Request.QueryString["ID"];
+            //假設不是PostBack
+            //if (!IsPostBack)
+            //{
+                DataTable dt = DDLManager.GetCompanyDDL();
+                this.dplCompany.DataSource = dt;
+                this.dplCompany.DataTextField = "Name";
+                this.dplCompany.DataValueField = "Cid";
+                this.dplCompany.DataBind();
+                //分為更新模式及新增模式，標題會依照當前模式動態更新。
+                //更新模式下會讀取當前發票號碼的資料，並鎖定發票號碼不讓使用者修改
+                if (ReceiptDetailHelper.isUpdateMode())
+                {   
+                    this.h1title.InnerText = "修改發票";
+                    string RepNumber = Request.QueryString["RepNo"];
 
-                    this.LoadReceipt(qsid);
+                    this.LoadReceipt(RepNumber);
 
                     this.txtReceiptNumber.Enabled = false;
                     this.txtReceiptNumber.BackColor = System.Drawing.Color.LightGray;
                 }
                 else
                 {
-                    this.lbltitle.InnerText = "新增發票";
+                    this.h1title.InnerText = "新增發票";
                 }
-            }
+            //}
         }
 
-        #region ShowReceiptTable
+        #region LoadReceipt
+        //將發票號碼作為參數去資料庫讀取相對應的發票資料
         private void LoadReceipt(string ReceiptNumber)
-        {
+        {   
+            //讀取指定發票號碼的資料並放入資料模型model裡
             var manager = new ReceiptManager();
-            var model = manager.GetReceipt(ReceiptNumber);//out Guid temp
+            var model = manager.GetReceipt(ReceiptNumber);
 
+            //讀取不到資料的話，回到發票總覽頁面
             if (model == null)
                 Response.Redirect("~/ReceiptList.aspx");
 
+            //將讀取到的資料放入畫面中各個使用者輸入項目裡
             this.txtReceiptNumber.Text = model.ReceiptNumber;
-            //將日期轉成yyyy-MM-dd格式
             this.lbDate.Text = string.Format("{0:yyyy-MM-dd}", model.Date);
-
-            this.dpdCompany.SelectedValue = model.Company.Trim();
+            
+            this.dplCompany.SelectedValue = model.Company.Trim();
             this.txtAmount.Text = model.Amount.ToString();
-
+            
             int R_E = (int)model.Revenue_Expense;
-            this.dpdRE.SelectedValue = R_E.ToString();
+            this.dplRE.SelectedValue = R_E.ToString();
         }
 
         #endregion
@@ -91,16 +103,16 @@ namespace WebApplication2
 
             string inputRecNo = this.txtReceiptNumber.Text.Trim();
             string inputDate = this.lbDate.Text;
-            string dpdCompany = this.dpdCompany.SelectedItem.Text;
+            string dplCompany = this.dplCompany.SelectedValue;
             string inputAmount = this.txtAmount.Text.Trim();
-            string dpdValue = this.dpdRE.SelectedValue.ToString();
+            string dplRE = this.dplRE.SelectedValue;
             //判斷使用者輸入的值,有值且格式正確,才可以存入資料庫。
             //空值或格式不正確,中斷方法
             if(ReceiptDetailHelper.isUpdateMode())
             {
-                string qsID = Request.QueryString["ID"];
+                string RepNumber = Request.QueryString["RepNo"];
 
-                model = manager.GetReceipt(qsID);
+                model = manager.GetReceipt(RepNumber);
             }
             else
             {
@@ -140,10 +152,10 @@ namespace WebApplication2
 
             model.ReceiptNumber = inputRecNo;
             model.Date = DateTime.Parse(inputDate);
-            model.Company = dpdCompany;
+            model.Company = dplCompany;
             model.Amount = decimal.Parse(inputAmount);
             //將下拉選單的字串值,轉型成Enum
-            model.Revenue_Expense = (Revenue_Expense)Enum.Parse(typeof(Revenue_Expense), dpdValue);
+            model.Revenue_Expense = (Revenue_Expense)Enum.Parse(typeof(Revenue_Expense), dplRE);
 
             //寫入DB
             if (ReceiptDetailHelper.isUpdateMode())
