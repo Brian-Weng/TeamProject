@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using WebApplication2.Helpers;
 using WebApplication2.Models;
 
@@ -79,23 +77,6 @@ namespace WebApplication2.Managers
 
             this.ExecuteNonQuery(queryString, parameters);
 
-            //using (SqlConnection connection = new SqlConnection(connectionString))
-            //{
-            //    SqlCommand command = new SqlCommand(queryString, connection);
-            //    command.Parameters.AddWithValue("@ReceiptNumber", ReceiptNumber);
-            //    command.Parameters.AddWithValue("@DeleteDate", DateTime.Now);
-            //    command.Parameters.AddWithValue("@Deleter", "Brian");
-
-            //    try
-            //    {
-            //        connection.Open();
-            //        command.ExecuteNonQuery();
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        throw;
-            //    }
-            //}
         }
 
         public List<ReceiptModel> GetReceipts(string company, decimal? minPrice, decimal? maxPrice, int? R_E , out int totalSize, int currentPage = 1, int pageSize = 10)
@@ -198,66 +179,10 @@ namespace WebApplication2.Managers
             totalSize = (totalSize2.HasValue) ? totalSize2.Value : 0;
 
             return list;
-            //using (SqlConnection connection = new SqlConnection(connectionString))
-            //{
-            //    SqlCommand command = new SqlCommand(queryString, connection);
-            //    if (!string.IsNullOrEmpty(company))
-            //        command.Parameters.AddWithValue("@company", company);
-            //    if (minPrice.HasValue && maxPrice.HasValue)
-            //    {
-            //        if (minPrice.Value > maxPrice.Value)
-            //        {
-            //            decimal temp = minPrice.Value;
-            //            minPrice = maxPrice.Value;
-            //            maxPrice = temp;
-            //        }
-
-            //        command.Parameters.AddWithValue("@minPrice", minPrice.Value);
-            //        command.Parameters.AddWithValue("@maxPrice", maxPrice.Value);
-            //    }
-            //    else if (minPrice.HasValue)
-            //        command.Parameters.AddWithValue("@minPrice", minPrice.Value);
-            //    else if (maxPrice.HasValue)
-            //        command.Parameters.AddWithValue("@maxPrice", maxPrice.Value);
-
-            //    if (R_E.HasValue)
-            //        command.Parameters.AddWithValue("@r_e", R_E.Value);
-
-            //    try
-            //    {
-            //        connection.Open();
-            //        SqlDataReader reader = command.ExecuteReader();//從最上方1行1行下來將SQL Sever的資料流入reader
-            //        List<ReceiptModel> list = new List<ReceiptModel>();
-
-            //        while (reader.Read())
-            //        {
-            //            ReceiptModel model = new ReceiptModel();
-            //            model.ReceiptNumber = (string)reader["ReceiptNumber"];
-            //            model.Date = (DateTime)reader["Date"];
-            //            model.Company = (string)reader["Company"];
-            //            model.Amount = (Decimal)reader["Amount"];
-            //            model.Revenue_Expense = (Revenue_Expense)reader["Revenue_Expense"];
-
-            //            list.Add(model);
-            //        }
-            //        reader.Close();
-
-            //        command.CommandText = countQuery;
-            //        int? totalSize2 = command.ExecuteScalar() as int?;
-            //        totalSize = (totalSize2.HasValue) ? totalSize2.Value : 0;
-
-            //        return list;
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        throw;
-            //    }
-            //}
         }
 
         public ReceiptModel GetReceipt(string ReceiptNumber)
         {
-            //string connectionString = "Data Source=localhost\\SQLExpress;Initial Catalog=Financials; Integrated Security=true";
             string queryString =
                 $@" SELECT * FROM Receipt
                     WHERE ReceiptNumber = @ReceiptNumber
@@ -282,36 +207,6 @@ namespace WebApplication2.Managers
 
             return model;
 
-            //using (SqlConnection connection = new SqlConnection(connectionString))
-            //{
-            //    SqlCommand command = new SqlCommand(queryString, connection);
-            //    command.Parameters.AddWithValue("@ReceiptNumber", ReceiptNumber);
-
-            //    try
-            //    {
-            //        connection.Open();
-            //        SqlDataReader reader = command.ExecuteReader();//從最上方1行1行下來將SQL Sever的資料流入reader
-
-            //        ReceiptModel model = null;
-
-            //        while (reader.Read())
-            //        {   //假設有reader有讀到資料,才設定model的初始值
-            //            model = new ReceiptModel();
-            //            model.ReceiptNumber = (string)reader["ReceiptNumber"];
-            //            model.Date = (DateTime)reader["Date"];
-            //            model.Company = reader["Company"].ToString();
-            //            model.Amount = (Decimal)reader["Amount"];
-            //            model.Revenue_Expense = (Revenue_Expense)reader["Revenue_Expense"];
-            //        }
-            //        reader.Close();
-
-            //        return model;
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        throw;
-            //    }
-            //}
         }
     }
 }

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using System.Web;
-
 using WebApplication2.Managers;
 
 namespace WebApplication2.Helpers
@@ -46,9 +42,7 @@ namespace WebApplication2.Helpers
             else if (Regex.IsMatch(RepNumber, @"^[A-Z]{2}[-]{1}[0-9]{8}$"))
                 return true;
             else
-                return false;
-                
+                return false;     
         }
-
     }
 }

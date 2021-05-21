@@ -161,6 +161,7 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="TestWebForm5.aspx" />
     <Content Include="UCReceiptList.ascx" />
     <Content Include="UC新增日記帳.ascx" />
     <Content Include="修改項目.aspx" />
@@ -322,6 +323,13 @@
     </Compile>
     <Compile Include="Site1.Master.designer.cs">
       <DependentUpon>Site1.Master</DependentUpon>
+    </Compile>
+    <Compile Include="TestWebForm5.aspx.cs">
+      <DependentUpon>TestWebForm5.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestWebForm5.aspx.designer.cs">
+      <DependentUpon>TestWebForm5.aspx</DependentUpon>
     </Compile>
     <Compile Include="ucNav.ascx.cs">
       <DependentUpon>ucNav.ascx</DependentUpon>

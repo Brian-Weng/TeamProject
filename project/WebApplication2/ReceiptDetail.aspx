@@ -18,9 +18,10 @@
         }
     </style>
 </asp:Content>
+
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-<div class="jumbotron"><h1 id="h1title" runat="server" class="display-4" ></h1></div>
+<div class="jumbotron"><h1 id="h1Title" runat="server" class="display-4" ></h1></div>
 <div id="content" class="jumbotron">
     <div class="container d-flex align-items-center justify-content-center">
         <table class="table" style="width:570px">

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 
 namespace WebApplication2.Helpers
 {
@@ -31,7 +29,7 @@ namespace WebApplication2.Helpers
                 }
                 catch(Exception ex)
                 {
-                    throw;
+                    throw ex;
                 }
             }
         }
@@ -59,7 +57,7 @@ namespace WebApplication2.Helpers
                 }
                 catch (Exception ex)
                 {
-                    throw;
+                    throw ex;
                 }
             }
         }
@@ -88,7 +86,7 @@ namespace WebApplication2.Helpers
                 }
                 catch(Exception ex)
                 {
-                    throw;
+                    throw ex;
                 }
             }
         }

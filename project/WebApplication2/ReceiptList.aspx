@@ -30,10 +30,6 @@
                  padding-bottom:10px;
                  margin-bottom:5px;
             }
-            a{
-                font-size:20px;
-                padding:4px;
-            }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -89,18 +85,24 @@
                 </ItemTemplate>
             </asp:Repeater>
         </table>
-        <div>
-            <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item"><a class="page-link" runat="server" id="firstPage" href="#" title="前往第1頁">First</a></li>
-                <asp:Repeater runat="server" ID="repPaging">
-                    <ItemTemplate>
-                        <li class="page-item"><a class="page-link" href="<%# Eval("Link") %>" title="<%# Eval("Title") %>"><%# Eval("Name") %></a></li>
-                    </ItemTemplate>
-                </asp:Repeater>
-                <li class="page-item"><a class="page-link" runat="server" id="lastPage" href="#" title="前往第1頁">Last</a></li>
-            </ul>
-            </nav>
+        <div class="d-flex justify-content-between">
+            <div>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" runat="server" id="firstPage" href="#" title="前往第1頁">First</a></li>
+                        <asp:Repeater runat="server" ID="repPaging">
+                            <ItemTemplate>
+                                <li class="page-item"><a class="page-link" href="<%# Eval("Link") %>" title="<%# Eval("Title") %>"><%# Eval("Name") %></a></li>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                        <li class="page-item"><a class="page-link" runat="server" id="lastPage" href="#" title="前往第1頁">Last</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div>
+                <asp:Label runat="server" ID="lblCurrentPage"></asp:Label> /
+                <asp:Label runat="server" ID="lblTotalPage"></asp:Label>頁
+            </div>
         </div>
     </div>
 </asp:Content>

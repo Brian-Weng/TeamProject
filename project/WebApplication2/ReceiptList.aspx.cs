@@ -121,7 +121,10 @@ namespace WebApplication2
             var pagingList = pagination.RepPagingList(pages);
             this.repPaging.DataSource = pagingList;
             this.repPaging.DataBind();
-            
+
+            this.lblCurrentPage.Text = pIndex.ToString();
+            this.lblTotalPage.Text = pages.ToString();
+
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
