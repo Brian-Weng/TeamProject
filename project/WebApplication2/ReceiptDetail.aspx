@@ -63,7 +63,7 @@
                 <td>
                     <asp:UpdatePanel ID="UpdatePanel3" runat="server">
                         <ContentTemplate>
-                            <asp:TextBox ID="txtAmount" runat="server" MaxLength="8" TextMode="Number" min="1" max="99999999" AutoPostBack="true" OnTextChanged="txtAmount_TextChanged"></asp:TextBox>
+                            <asp:TextBox ID="txtAmount" runat="server" TextMode="Number" min="1" max="99999999" AutoPostBack="true" OnTextChanged="txtAmount_TextChanged"></asp:TextBox>
                             <asp:Label ID="lbAmount" runat="server" Text="" ForeColor="Red"></asp:Label>
                         </ContentTemplate>
                     </asp:UpdatePanel>

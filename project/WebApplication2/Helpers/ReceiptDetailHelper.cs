@@ -27,7 +27,9 @@ namespace WebApplication2.Helpers
             string label;
             if(string.IsNullOrEmpty(Amount))
                 label = "金額不能為空";
-            else if(!int.TryParse(Amount, out int Amt))
+            else if(!Regex.IsMatch(Amount, @"^[1-9][0-9]{1,7}$"))
+                label = "輸入範圍在 1 ~ 99999999";
+            else if (!decimal.TryParse(Amount, out decimal Amt))
                 label = "必須輸入數字";
             else
                 label = string.Empty;

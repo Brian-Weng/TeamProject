@@ -9,30 +9,34 @@ namespace WebApplication2
     public partial class ReceiptDetail : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {   
-            //依照資料庫的Company資料表設定下拉選單預設值
-            //宣告DataTable來存取Company資料並給下拉選單繫結
-            DataTable ddlDataTable = DDLManager.GetCompanyDDL();
-            this.dplCompany.DataSource = ddlDataTable;
-            this.dplCompany.DataValueField = "Cid";
-            this.dplCompany.DataTextField = "Name";
-            this.dplCompany.DataBind();
-
-            //分為更新模式及新增模式，標題會依照當前模式動態更新。
-            //更新模式下會讀取當前發票號碼的資料，並鎖定發票號碼不讓使用者修改
-            if (ReceiptDetailHelper.isUpdateMode())
-            {   
-                this.h1Title.InnerText = "修改發票";
-                //宣告變數RepNumber來存取QueryString["RepNo"]
-                string RepNumber = Request.QueryString["RepNo"];
-                this.LoadReceipt(RepNumber);
-
-                this.txtReceiptNumber.Enabled = false;
-                this.txtReceiptNumber.BackColor = System.Drawing.Color.LightGray;
-            }
-            else
+        {
+            if (!IsPostBack)
             {
-                this.h1Title.InnerText = "新增發票";
+                //依照資料庫的Company資料表設定下拉選單預設值
+                //宣告DataTable來存取Company資料並給下拉選單繫結
+                DDLManager ddlManager = new DDLManager();
+                DataTable ddlDataTable = ddlManager.GetCompanyDDL();
+                this.dplCompany.DataSource = ddlDataTable;
+                this.dplCompany.DataValueField = "Cid";
+                this.dplCompany.DataTextField = "Name";
+                this.dplCompany.DataBind();
+
+                //分為更新模式及新增模式，標題會依照當前模式動態更新。
+                //更新模式下會讀取當前發票號碼的資料，並鎖定發票號碼不讓使用者修改
+                if (ReceiptDetailHelper.isUpdateMode())
+                {
+                    this.h1Title.InnerText = "修改發票";
+                    //宣告變數RepNumber來存取QueryString["RepNo"]
+                    string RepNumber = Request.QueryString["RepNo"];
+                    this.LoadReceipt(RepNumber);
+
+                    this.txtReceiptNumber.Enabled = false;
+                    this.txtReceiptNumber.BackColor = System.Drawing.Color.LightGray;
+                }
+                else
+                {
+                    this.h1Title.InnerText = "新增發票";
+                }
             }
 
         }
@@ -54,7 +58,7 @@ namespace WebApplication2
             this.lbDate.Text = string.Format("{0:yyyy-MM-dd}", model.Date);
             this.dplCompany.SelectedValue = model.Company;
             this.txtAmount.Text = model.Amount.ToString();
-            this.dplRE.SelectedValue = model.Revenue_Expense.ToString();
+            this.dplRE.SelectedValue = ((int)model.Revenue_Expense).ToString();
         }
 
         #endregion
@@ -137,7 +141,9 @@ namespace WebApplication2
             {   
                 if (string.IsNullOrEmpty(inputRecNo) || string.Equals(inputDate, "請選擇日期") || string.IsNullOrEmpty(inputAmount))
                 {
-                    this.lbDate.ForeColor = System.Drawing.Color.Red;
+                    if(string.Equals(inputDate, "請選擇日期"))
+                        this.lbDate.ForeColor = System.Drawing.Color.Red;
+
                     this.lblMsg.Text = "請填入完整的發票資料";
                     return;
                 }
