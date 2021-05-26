@@ -8,8 +8,6 @@ namespace WebApplication2
 {
     public partial class ReceiptDetail : System.Web.UI.Page
     {
-        //建立用來存取當前QueryString的變數
-        private string _currentQuery;
         protected void Page_Load(object sender, EventArgs e)
         {
             //如果第一次載入這個Page
@@ -23,23 +21,26 @@ namespace WebApplication2
                 this.dplCompany.DataTextField = "Name";
                 this.dplCompany.DataBind();
 
-                
+                //宣告變數存取QueryString
+                string RepNumber = Request.QueryString["RepNo"];
+
                 //分為更新模式及新增模式
-                if (ReceiptDetailHelper.isUpdateMode(out _currentQuery))
+                if (ReceiptDetailHelper.isUpdateMode())
                 {
-                    //如果是更新模式，回傳當前QueryString
                     this.h1Title.InnerText = "修改發票";
+
                     //讀取DB內的資料
-                    this.LoadReceipt(_currentQuery);
-                    //所定發票號碼
+                    this.LoadReceipt(RepNumber);
+
+                    //鎖定發票號碼
                     this.txtReceiptNumber.Enabled = false;
                     this.txtReceiptNumber.BackColor = System.Drawing.Color.LightGray;
                 }
-                else if (!string.IsNullOrEmpty(_currentQuery))
+                else if (!string.IsNullOrEmpty(RepNumber))
                 {
                     //Uri的QueryString被更改時、直接跳回發票總覽頁面
                     var manager = new ReceiptManager();
-                    if (manager.GetReceipt(_currentQuery) == null)
+                    if (manager.GetReceipt(RepNumber) == null)
                     {
                         Response.Redirect("~/ReceiptList.aspx");
                     }
@@ -148,7 +149,7 @@ namespace WebApplication2
             //分成更新模式及新增模式
             //更新模式下將資料model更新至資料庫
             //新增模式下將資料model存入資料庫
-            if (!string.IsNullOrWhiteSpace(_currentQuery))
+            if (ReceiptDetailHelper.isUpdateMode())
             {
                 manager.UpdateReceipt(model);
                 this.lblMsg.Text = "發票更新成功";

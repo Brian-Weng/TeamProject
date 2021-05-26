@@ -33,7 +33,7 @@
                 <td>
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                         <ContentTemplate>
-                            <asp:TextBox ID="txtReceiptNumber" runat="server" AutoPostBack="true" OnTextChanged="txtReceiptNumber_TextChanged"></asp:TextBox>
+                            <asp:TextBox ID="txtReceiptNumber" runat="server" MaxLength="11" AutoPostBack="true" OnTextChanged="txtReceiptNumber_TextChanged"></asp:TextBox>
                             <asp:Literal runat="server">(必填)</asp:Literal>
                             <asp:Label ID="lbReceiptNumber" runat="server" Text="" ForeColor="Red"></asp:Label>
                         </ContentTemplate>

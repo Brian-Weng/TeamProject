@@ -9,6 +9,7 @@ namespace WebApplication2.Helpers
         //檢查發票號碼
         public static string checkReceiptNumber(string receiptNumber)
         {
+            
             string label;
             var manager = new ReceiptManager();
             
@@ -16,7 +17,7 @@ namespace WebApplication2.Helpers
                 label = "發票編號不能為空";
             else if (receiptNumber.Length != 11 || !Regex.IsMatch(receiptNumber, @"^[A-Z]{2}[-]{1}[0-9]{8}$"))
                 label = "發票格式不正確";
-            else if (manager.GetReceipt(receiptNumber) != null)
+            else if (HttpContext.Current.Request.QueryString["RepNo"] == null && manager.GetReceipt(receiptNumber) != null)
                 label = "此發票號碼重複";
             else
                 label = string.Empty;
@@ -39,9 +40,9 @@ namespace WebApplication2.Helpers
         }
         
         //是否為更新模式
-        public static bool isUpdateMode(out string RepNumber)
+        public static bool isUpdateMode()
         {   
-            RepNumber = HttpContext.Current.Request.QueryString["RepNo"];
+            string RepNumber = HttpContext.Current.Request.QueryString["RepNo"];
             if (string.IsNullOrEmpty(RepNumber))
                 return false;
             else if (Regex.IsMatch(RepNumber, @"^[A-Z]{2}[-]{1}[0-9]{8}$"))
