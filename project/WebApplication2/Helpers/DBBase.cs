@@ -6,7 +6,8 @@ using System.Data.SqlClient;
 namespace WebApplication2.Helpers
 {
     public class DBBase
-    {
+    {   
+        //取得DataTable
         public DataTable GetDataTable(string dbCommand, List<SqlParameter> parameters)
         {
             string connectionString = this.GetConnectionString();
@@ -34,6 +35,7 @@ namespace WebApplication2.Helpers
             }
         }
 
+        //取得第一筆資料
         public object GetScale(string dbCommand, List<SqlParameter> parameters)
         {
             string connectionString = this.GetConnectionString();
@@ -62,6 +64,7 @@ namespace WebApplication2.Helpers
             }
         }
 
+        //取得受影響列數
         public int ExecuteNonQuery(string dbCommand, List<SqlParameter> parameters)
         {
             string connectionString = this.GetConnectionString();
@@ -91,6 +94,7 @@ namespace WebApplication2.Helpers
             }
         }
 
+        //取得連線字串
         private string GetConnectionString()
         {
             var manage = System.Configuration.ConfigurationManager.ConnectionStrings["FinancialsDataBase"];

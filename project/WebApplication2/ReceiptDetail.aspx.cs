@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Data;
 using WebApplication2.Managers;
 using WebApplication2.Models;
 using WebApplication2.Helpers;
-using System.Data;
 
 namespace WebApplication2
 {
@@ -29,7 +29,7 @@ namespace WebApplication2
                 {
                     this.h1Title.InnerText = "修改發票";
 
-                    //讀取DB內的資料
+                    //讀取DB內的資料顯示在畫面
                     this.LoadReceipt(RepNumber);
 
                     //鎖定發票號碼
