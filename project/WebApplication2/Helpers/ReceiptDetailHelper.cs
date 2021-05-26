@@ -1,11 +1,12 @@
-﻿using System.Text.RegularExpressions;
-using System.Web;
+﻿using System.Web;
+using System.Text.RegularExpressions;
 using WebApplication2.Managers;
 
 namespace WebApplication2.Helpers
 {
     public class ReceiptDetailHelper
     {
+        //檢查發票號碼
         public static string checkReceiptNumber(string receiptNumber)
         {
             string label;
@@ -22,6 +23,7 @@ namespace WebApplication2.Helpers
             return label;
         }
 
+        //檢查金額
         public static string checkAmount(string Amount)
         {   
             string label;
@@ -35,10 +37,11 @@ namespace WebApplication2.Helpers
                 label = string.Empty;
             return label;
         }
-
-        public static bool isUpdateMode()
+        
+        //是否為更新模式
+        public static bool isUpdateMode(out string RepNumber)
         {   
-            string RepNumber = HttpContext.Current.Request.QueryString["RepNo"];
+            RepNumber = HttpContext.Current.Request.QueryString["RepNo"];
             if (string.IsNullOrEmpty(RepNumber))
                 return false;
             else if (Regex.IsMatch(RepNumber, @"^[A-Z]{2}[-]{1}[0-9]{8}$"))

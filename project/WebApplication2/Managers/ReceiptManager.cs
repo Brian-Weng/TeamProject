@@ -9,6 +9,7 @@ namespace WebApplication2.Managers
 {
     public class ReceiptManager : DBBase
     {
+        //新增發票
         public void CreateReceipt(ReceiptModel model)
         {
             string queryString =
@@ -30,6 +31,7 @@ namespace WebApplication2.Managers
 
         }
 
+        //修改發票
         public void UpdateReceipt(ReceiptModel model)
         {
             string queryString =
@@ -59,6 +61,7 @@ namespace WebApplication2.Managers
 
         }
 
+        //刪除發票
         public void DeleteReceipt(string ReceiptNumber)
         {
             string queryString =
@@ -79,6 +82,7 @@ namespace WebApplication2.Managers
 
         }
 
+        //查詢發票清單
         public List<ReceiptModel> GetReceipts(string company, decimal? minPrice, decimal? maxPrice, int? R_E , out int totalSize, int currentPage = 1, int pageSize = 10)
         {
             List<SqlParameter> dbParameters = new List<SqlParameter>();
@@ -181,6 +185,7 @@ namespace WebApplication2.Managers
             return list;
         }
 
+        //查詢單一發票
         public ReceiptModel GetReceipt(string ReceiptNumber)
         {
             string queryString =

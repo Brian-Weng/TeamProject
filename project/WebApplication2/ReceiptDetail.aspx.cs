@@ -8,12 +8,14 @@ namespace WebApplication2
 {
     public partial class ReceiptDetail : System.Web.UI.Page
     {
+        //建立用來存取當前QueryString的變數
+        private string _currentQuery;
         protected void Page_Load(object sender, EventArgs e)
         {
+            //如果第一次載入這個Page
             if (!IsPostBack)
             {
-                //依照資料庫的Company資料表設定下拉選單預設值
-                //宣告DataTable來存取Company資料並給下拉選單繫結
+                //讀取DB的Company表來設定下拉選單內容
                 DDLManager ddlManager = new DDLManager();
                 DataTable ddlDataTable = ddlManager.GetCompanyDDL();
                 this.dplCompany.DataSource = ddlDataTable;
@@ -21,17 +23,26 @@ namespace WebApplication2
                 this.dplCompany.DataTextField = "Name";
                 this.dplCompany.DataBind();
 
-                //分為更新模式及新增模式，標題會依照當前模式動態更新。
-                //更新模式下會讀取當前發票號碼的資料，並鎖定發票號碼不讓使用者修改
-                if (ReceiptDetailHelper.isUpdateMode())
+                
+                //分為更新模式及新增模式
+                if (ReceiptDetailHelper.isUpdateMode(out _currentQuery))
                 {
+                    //如果是更新模式，回傳當前QueryString
                     this.h1Title.InnerText = "修改發票";
-                    //宣告變數RepNumber來存取QueryString["RepNo"]
-                    string RepNumber = Request.QueryString["RepNo"];
-                    this.LoadReceipt(RepNumber);
-
+                    //讀取DB內的資料
+                    this.LoadReceipt(_currentQuery);
+                    //所定發票號碼
                     this.txtReceiptNumber.Enabled = false;
                     this.txtReceiptNumber.BackColor = System.Drawing.Color.LightGray;
+                }
+                else if (!string.IsNullOrEmpty(_currentQuery))
+                {
+                    //Uri的QueryString被更改時、直接跳回發票總覽頁面
+                    var manager = new ReceiptManager();
+                    if (manager.GetReceipt(_currentQuery) == null)
+                    {
+                        Response.Redirect("~/ReceiptList.aspx");
+                    }
                 }
                 else
                 {
@@ -42,18 +53,18 @@ namespace WebApplication2
         }
 
         #region LoadReceipt
-        //將發票號碼作為參數去資料庫讀取相對應的發票資料
+        //用發票號碼去DB讀取對應的發票資料
         private void LoadReceipt(string ReceiptNumber)
         {   
-            //讀取指定發票號碼的資料並放入資料模型model
+            //讀取資料並放入資料model
             var manager = new ReceiptManager();
             var model = manager.GetReceipt(ReceiptNumber);
 
-            //讀取不到資料的話，回到發票總覽頁面
+            //如果讀取不到資料，回到發票總覽頁面
             if (model == null)
                 Response.Redirect("~/ReceiptList.aspx");
 
-            //將讀取到的資料放入畫面中各個使用者輸入項目裡
+            //讀取到的資料放入畫面中各個使用者輸入項目裡
             this.txtReceiptNumber.Text = model.ReceiptNumber;
             this.lbDate.Text = string.Format("{0:yyyy-MM-dd}", model.Date);
             this.dplCompany.SelectedValue = model.Company;
@@ -64,9 +75,10 @@ namespace WebApplication2
         #endregion
 
         #region SetInputDate
+        //日期輸入設定
         protected void cldrDate_SelectionChanged(object sender, EventArgs e)
         {
-            //將使用者在日曆上點選的日期存入日期標籤，標籤文字顏色設定為黑色
+            //日曆上點選日期會在日期標籤顯示，標籤文字顏色設定為黑色
             lbDate.ForeColor = System.Drawing.Color.Black;
             lbDate.Text = string.Format("{0:yyyy-MM-dd}", cldrDate.SelectedDate);
         }
@@ -74,11 +86,11 @@ namespace WebApplication2
         #endregion
 
         #region checkReceiptNumber
+        //檢查發票號碼
         protected void txtReceiptNumber_TextChanged(object sender, EventArgs e)
         {
-            //宣告變數存取使用者輸入的發票號碼
+            //檢查發票號碼輸入值，依照輸入內容在畫面顯示提示訊息
             string inputRepNumber = this.txtReceiptNumber.Text.Trim();
-            //檢查使用者的輸入值，依照輸入內容在畫面顯示提示訊息
             this.lbReceiptNumber.Text = ReceiptDetailHelper.checkReceiptNumber(inputRepNumber);
         }
         #endregion
@@ -86,80 +98,47 @@ namespace WebApplication2
         #region checkAmount
         protected void txtAmount_TextChanged(object sender, EventArgs e)
         {
+            //檢查金額輸入值，依照輸入內容在畫面顯示提示訊息
             string inputAmount = this.txtAmount.Text;
-
             this.lbAmount.Text = ReceiptDetailHelper.checkAmount(inputAmount);
         }
         #endregion
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            //建立ReceiptManager的物件實體
-            //建立資料模型model變數設定為null
+            //建立資料model及ReceiptManager的物件
             var manager = new ReceiptManager();
-            ReceiptModel model = null;
+            var model = new ReceiptModel();
 
-            //宣告5個變數來存取使用者的輸入值
+            //建立5個變數來存取各個輸入值
             string inputRecNo = this.txtReceiptNumber.Text.Trim();
             string inputDate = this.lbDate.Text.Trim();
             string dplCompany = this.dplCompany.SelectedValue;
             string inputAmount = this.txtAmount.Text.Trim();
             string dplRE = this.dplRE.SelectedValue;
 
-            //分成更新模式及新增模式
-            //更新模式下將當前QueryString["RepNo"]作為參數讀取資料並放入資料模型model
-            //新增模式下model變數設定成新的物件實體
-            if (ReceiptDetailHelper.isUpdateMode())
+            //檢查輸入值(發票號碼、日期、金額)
+            if (string.IsNullOrEmpty(inputRecNo) || string.IsNullOrEmpty(inputAmount) || string.Equals(inputDate, "請選擇日期"))
             {
-                string RepNumber = Request.QueryString["RepNo"];
-                //model = manager.GetReceipt(RepNumber);
-                model = new ReceiptModel();
+                //日期沒輸入會變成紅色
+                if (string.Equals(inputDate, "請選擇日期"))
+                    this.lbDate.ForeColor = System.Drawing.Color.Red;
+
+                this.lblMsg.Text = "請填入完整的發票資料";
+                return;
             }
-            else
+            else if (ReceiptDetailHelper.checkReceiptNumber(inputRecNo) != string.Empty)
             {
-                model = new ReceiptModel();
+                this.lblMsg.Text = "請填入正確的發票格式";
+                return;
+            }
+            else if (ReceiptDetailHelper.checkAmount(inputAmount) != string.Empty)
+            {
+                this.lblMsg.Text = "金額只能填入數字";
+                return;
             }
 
-            //分成更新模式及新增模式
-            //更新模式下鎖定了發票號碼的輸入值，所以只檢查金額的輸入值
-            //新增模式下檢查發票號碼的輸入值、是否有點選日期及金額的輸入值
-            //依照使用者的輸入給予提示訊息
-            if (ReceiptDetailHelper.isUpdateMode())
-            {   
-                if(string.IsNullOrEmpty(inputAmount))
-                {
-                    this.lblMsg.Text = "請填入發票金額";
-                    return;
-                }
-                else if (ReceiptDetailHelper.checkAmount(inputAmount) != string.Empty)
-                {
-                    this.lblMsg.Text = "金額只能填入數字";
-                    return;
-                }
-            }
-            else
-            {   
-                if (string.IsNullOrEmpty(inputRecNo) || string.Equals(inputDate, "請選擇日期") || string.IsNullOrEmpty(inputAmount))
-                {
-                    if(string.Equals(inputDate, "請選擇日期"))
-                        this.lbDate.ForeColor = System.Drawing.Color.Red;
-
-                    this.lblMsg.Text = "請填入完整的發票資料";
-                    return;
-                }
-                else if (ReceiptDetailHelper.checkReceiptNumber(inputRecNo) != string.Empty)
-                {
-                    this.lblMsg.Text = "請填入正確的發票格式";
-                    return;
-                }
-                else if(ReceiptDetailHelper.checkAmount(inputAmount) != string.Empty)
-                {
-                    this.lblMsg.Text = "金額只能填入數字";
-                    return;
-                }
-            }
-
-            //上面驗證都通過後，將資料模型model設定成使用者輸入值
+            //上面檢查都通過後，將輸入值存入資料model
             model.ReceiptNumber = inputRecNo;
             model.Date = DateTime.Parse(inputDate);
             model.Company = dplCompany;
@@ -168,8 +147,8 @@ namespace WebApplication2
 
             //分成更新模式及新增模式
             //更新模式下將資料model更新至資料庫
-            //新增模式下將新資料model存入資料庫
-            if (ReceiptDetailHelper.isUpdateMode())
+            //新增模式下將資料model存入資料庫
+            if (!string.IsNullOrWhiteSpace(_currentQuery))
             {
                 manager.UpdateReceipt(model);
                 this.lblMsg.Text = "發票更新成功";

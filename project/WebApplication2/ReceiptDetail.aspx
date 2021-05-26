@@ -34,6 +34,7 @@
                     <asp:UpdatePanel ID="UpdatePanel1" runat="server">
                         <ContentTemplate>
                             <asp:TextBox ID="txtReceiptNumber" runat="server" AutoPostBack="true" OnTextChanged="txtReceiptNumber_TextChanged"></asp:TextBox>
+                            <asp:Literal runat="server">(必填)</asp:Literal>
                             <asp:Label ID="lbReceiptNumber" runat="server" Text="" ForeColor="Red"></asp:Label>
                         </ContentTemplate>
                     </asp:UpdatePanel>
@@ -44,7 +45,10 @@
                 <td>
                     <asp:UpdatePanel ID="UpdatePanel2" runat="server">
                         <ContentTemplate>
-                            <asp:Label ID="lbDate" runat="server" Text="請選擇日期" Font-Bold="True" Font-Size="Large"></asp:Label><br /><hr />
+                            <asp:Label ID="lbDate" runat="server" Text="請選擇日期" Font-Bold="True" Font-Size="Large"></asp:Label>
+                            <asp:Literal runat="server">(必填)</asp:Literal>
+                            <br />
+                            <hr />
                             <asp:Calendar ID="cldrDate" runat="server" ShowGridLines="True" OnSelectionChanged="cldrDate_SelectionChanged" CellPadding="1" Width="400px" DayNameFormat="Shortest"></asp:Calendar>
                         </ContentTemplate>
                     </asp:UpdatePanel>
@@ -53,9 +57,8 @@
             <tr>
                 <th>開立公司：</th>
                 <td>
-                    <asp:DropDownList ID="dplCompany" runat="server">
-                        
-                    </asp:DropDownList>
+                    <asp:DropDownList ID="dplCompany" runat="server"></asp:DropDownList>
+                    <asp:Literal runat="server">(必填)</asp:Literal>
                 </td>
             </tr>
             <tr>
@@ -64,6 +67,7 @@
                     <asp:UpdatePanel ID="UpdatePanel3" runat="server">
                         <ContentTemplate>
                             <asp:TextBox ID="txtAmount" runat="server" TextMode="Number" min="1" max="99999999" AutoPostBack="true" OnTextChanged="txtAmount_TextChanged"></asp:TextBox>
+                            <asp:Literal runat="server">(必填)</asp:Literal>
                             <asp:Label ID="lbAmount" runat="server" Text="" ForeColor="Red"></asp:Label>
                         </ContentTemplate>
                     </asp:UpdatePanel>
@@ -76,6 +80,7 @@
                         <asp:ListItem Text="銷項" Value="1"></asp:ListItem>
                         <asp:ListItem Text="進項" Value="2"></asp:ListItem>
                     </asp:DropDownList>
+                    <asp:Literal runat="server">(必填)</asp:Literal>
                 </td>
             </tr>
             <tr>
